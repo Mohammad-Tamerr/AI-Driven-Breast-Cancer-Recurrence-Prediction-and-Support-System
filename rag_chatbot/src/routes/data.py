@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, UploadFile
 import os
 from helpers.config import Settings, get_settings
 from controllers import DataController
-
+from models import ResponseSignal
 data_router = APIRouter(
     prefix="/Rafeek/v1/data",
     tags=["Rafeek_v1, Data"],
