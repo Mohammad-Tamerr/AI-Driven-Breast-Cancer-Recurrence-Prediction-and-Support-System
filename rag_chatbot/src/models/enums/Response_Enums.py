@@ -5,4 +5,4 @@ class ResponseSignal(Enum):
     File_Type_Error = "File type is not allowed."
     File_Uploaded_Successfully = "Uploaded successfully."
     File_Size_Error = "File size exceeds the maximum limit."
-    SUCCESS = "Uploaded successfully."
+    
