@@ -5,6 +5,9 @@ from helpers.config import Settings, get_settings
 from controllers import DataController, ProjectController
 from models import ResponseSignal
 import aiofiles
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 data_router = APIRouter(
@@ -29,19 +32,31 @@ async def upload_file(
                 "signal": result_signal
             }
         )
-    project_dir_path = ProjectController().get_project_path(project_id=project_id)
-    file_path = os.path.join(project_dir_path, file.filename)
+    
+    file_path, file_id = data_controller.generate_unique_filepath(
+        orig_file_name=file.filename,
+        project_id=project_id
+    )
 
-    async with aiofiles.open(file_path, "wb") as f:
-        content = await file.read(app_settings.CHUNK_SIZE)
-        await f.write(content)
+    try:
+        async with aiofiles.open(file_path, "wb") as f:
+            while chunk := await file.read(app_settings.CHUNK_SIZE):
+                await f.write(chunk)
+    except Exception as e:
+
+        logger.error(f"Error while uploading file: {e}")
+
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "signal": ResponseSignal.FILE_UPLOAD_FAILED.value
+            }
+        )
 
     return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={
-            "signal": ResponseSignal.File_Uploaded_Successfully.value,
-            "message": ResponseSignal.File_Uploaded_Successfully.value,
-            "project_id": project_id,
-            "filename": file.filename
-        }
-    )
+            status_code=status.HTTP_200_OK,
+            content={
+                "signal": ResponseSignal.File_Uploaded_Successfully.value,
+                "file_id": file_id
+            }
+        )
