@@ -65,7 +65,6 @@ async def upload_file(
 async def process_endpoint(
     project_id: str,
     process_request: ProcessReuest,
-    app_settings: Settings = Depends(get_settings)
 ):
     file_id = process_request.file_id
     chunk_size = process_request.chunk_size
