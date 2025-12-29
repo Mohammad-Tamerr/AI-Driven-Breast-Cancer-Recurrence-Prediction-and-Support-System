@@ -7,15 +7,12 @@ class LLMInterface(ABC):
 
 
     @abstractmethod
-    def set_embedding_model(self, model_id: str):
+    def set_embedding_model(self, model_id: str, embedding_size: int):
         pass # Set the model for text embedding (1e.g., Ada-002, E5-Large)
 
     @abstractmethod
-    def generate_text(self,
-                    prompt: str,
-                    max_output_tokens: int,
-                    temperature: float=None
-                    ):
+    def generate_text(self, prompt: str, chat_history: list=[], max_output_tokens: int=None,
+                            temperature: float = None):
         pass # Generate text based on the prompt (e.g., completion or chat)
 
     @abstractmethod
