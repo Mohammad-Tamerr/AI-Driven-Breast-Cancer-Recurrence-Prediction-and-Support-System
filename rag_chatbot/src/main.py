@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from routes import base, data
 from helpers.config import get_settings
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from stores.LLM.LLMProviderFactory import LLMProviderFactory 
 
 app = FastAPI()
@@ -23,7 +26,8 @@ async def startup_db_client():
                                              embedding_size=settings.EMBEDDING_MODEL_SIZE)
 
 async def shutdown_db_client():
-    app.mongo_conn.close()
+    pass
+#    app.mongo_conn.close()
 
 app.router.lifespan.on_startup.append(startup_db_client)
 app.router.lifespan.on_shutdown.append(shutdown_db_client)
