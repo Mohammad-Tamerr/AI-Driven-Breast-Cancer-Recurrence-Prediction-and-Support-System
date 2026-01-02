@@ -1,6 +1,6 @@
 from ..LLMInterface import LLMInterface
 from ..LLMEnums import GeminiEnums
-import google.generativeai as genai
+from google import genai
 import logging
 
 class GeminiProvider(LLMInterface):
@@ -23,8 +23,7 @@ class GeminiProvider(LLMInterface):
 
         # Only configure Gemini if API key is provided
         if self.api_key and self.api_key.strip():
-            genai.configure(api_key=self.api_key)
-            self.client = True
+            self.client = genai.Client(api_key=self.api_key)
         else:
             self.client = None
 
@@ -55,31 +54,33 @@ class GeminiProvider(LLMInterface):
             max_output_tokens = max_output_tokens if max_output_tokens else self.default_generation_max_output_tokens
             temperature = temperature if temperature else self.default_generation_temperature
 
-            model = genai.GenerativeModel(self.generation_model_id)
-            
-            # Convert chat history to Gemini format
-            gemini_history = []
+            # Convert chat history to the new format
+            messages = []
             for msg in chat_history:
                 if isinstance(msg, dict) and 'role' in msg and 'content' in msg:
                     role = "user" if msg['role'] in ['user', 'USER'] else "model"
-                    gemini_history.append({
-                        "role": role,
-                        "parts": [msg['content']]
-                    })
+                    messages.append(genai.types.Content(
+                        role=role,
+                        parts=[genai.types.Part.from_text(msg['content'])]
+                    ))
 
-            # Start chat with history
-            chat = model.start_chat(history=gemini_history)
-            
-            # Generate response
-            response = chat.send_message(
-                self.process_text(prompt),
-                generation_config=genai.types.GenerationConfig(
+            # Add current prompt
+            messages.append(genai.types.Content(
+                role="user",
+                parts=[genai.types.Part.from_text(self.process_text(prompt))]
+            ))
+
+            # Generate response using the new API
+            response = self.client.models.generate_content(
+                model=self.generation_model_id,
+                contents=messages,
+                config=genai.types.GenerateContentConfig(
                     max_output_tokens=max_output_tokens,
                     temperature=temperature,
                 )
             )
 
-            if response and response.text:
+            if response and hasattr(response, 'text') and response.text:
                 return response.text
             else:
                 self.logger.error("Error while generating text with Gemini")
@@ -100,14 +101,15 @@ class GeminiProvider(LLMInterface):
             return None
         
         try:
-            result = genai.embed_content(
+            # Use the new embed API
+            result = self.client.models.embed_content(
                 model=self.embedding_model_id,
-                content=text,
-                task_type="retrieval_document" if document_type == "document" else "retrieval_query"
+                content=genai.types.Content(parts=[genai.types.Part.from_text(text)]),
+                task_type="RETRIEVAL_DOCUMENT" if document_type == "document" else "RETRIEVAL_QUERY"
             )
 
-            if result and 'embedding' in result:
-                return result['embedding']
+            if result and hasattr(result, 'embedding') and result.embedding:
+                return result.embedding.values
             else:
                 self.logger.error("Error while embedding text with Gemini")
                 return None
