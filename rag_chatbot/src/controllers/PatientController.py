@@ -379,8 +379,8 @@ class PatientController(BaseController):
                         parts.append("عادةً يحتاج مرضى السرطان لبروتين أكثر من الطبيعي — حوالي 1.2–1.5 غ/كغ/اليوم؛ وفي حالات الهدم الشديد قد يصل إلى 1.5–2.0 غ/كغ/اليوم. زودنا بوزن المريضة لحساب أدق واحجزي استشارة أخصائي تغذية.")
                         if diabetic:
                             parts.append("كما يجب مراعاة إجمالي الطاقة والكربوهيدرات في المرضى المصابين بالسكر؛ يمكن لأخصائي التغذية تكييف الخطة.")
-+
-             else:  # general
+
+            else:  # general
                  if 'positive' in er:
                      if lang == 'en':
                          parts.append("ER-positive status suggests endocrine therapy is likely part of management.")
