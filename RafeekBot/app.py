@@ -35,7 +35,7 @@ retriever = docsearch.as_retriever(
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",  
-    temperature=0.7,
+    temperature=0.9,
     google_api_key=gemini_api_key
 )
 
