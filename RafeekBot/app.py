@@ -21,7 +21,7 @@ os.environ["GEMINI_API_KEY"] = gemini_api_key
 # Load embeddings
 embedding = download_embeddings()
 
-index_name = "rafeek-bot"
+index_name = "rafeek-bot-v2"
 
 docsearch = PineconeVectorStore.from_existing_index(
     embedding=embedding,
@@ -30,12 +30,12 @@ docsearch = PineconeVectorStore.from_existing_index(
 
 retriever = docsearch.as_retriever(
     search_type="similarity",
-    search_kwargs={"k": 3}
+    search_kwargs={"k": 5}  # ✅ زودها من 3 لـ 5 عشان نتائج أكتر
 )
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",  
-    temperature=0.9,
+    model="gemini-2.5-flash-lite",  # ✅ غيّر من gemini-1.5-flash
+    temperature=0.4,  # ✅ خليها 0.4 للتوازن بين الدقة والطبيعية
     google_api_key=gemini_api_key
 )
 
