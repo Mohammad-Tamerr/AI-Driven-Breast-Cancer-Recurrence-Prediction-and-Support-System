@@ -70,14 +70,16 @@
             // Convert markdown to HTML
             let formatted = marked.parse(text);
             
-            // Additional custom formatting
+            // Custom formatting
             formatted = formatted
-                // Make bold text
+                // Bold text
                 .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                // Make italic text
+                // Italic text
                 .replace(/\*(.+?)\*/g, '<em>$1</em>')
                 // Add emoji spacing
-                .replace(/([\u{1F300}-\u{1F9FF}])/gu, '<span class="emoji-inline">$1</span>');
+                .replace(/([\u{1F300}-\u{1F9FF}])/gu, '<span class="emoji-inline">$1</span>')
+                // Highlight medical terms
+                .replace(/\(([A-Z][a-z]+ [a-z]+)\)/g, '<span class="medical-term">($1)</span>');
             
             return formatted;
         }

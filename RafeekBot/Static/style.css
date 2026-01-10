@@ -427,6 +427,31 @@ body {
 }
 
 /* ========================================
+   Medical Terms Styling
+   ======================================== */
+.medical-term {
+    background: linear-gradient(to right, #667eea10, #764ba210);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    font-size: 0.9em;
+    color: #667eea;
+    border-left: 2px solid #667eea;
+}
+
+/* Enhanced Message Content */
+.message-content strong {
+    color: #667eea;
+    font-weight: 700;
+}
+
+.message.bot .message-content h3 {
+    color: #667eea;
+    margin-top: 15px;
+    font-size: 1.1em;
+}
+
+/* ========================================
    Utility Classes
    ======================================== */
 .hidden {
