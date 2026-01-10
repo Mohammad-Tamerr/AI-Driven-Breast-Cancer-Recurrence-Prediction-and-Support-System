@@ -15,7 +15,7 @@ os.environ["GEMINI_API_KEY"] = gemini_api_key
 
 # Define paths
 data_path = "/Users/belalmohsen/Breast-cancer/data"  # ✅ غيّر المسار النسبي
-index_name = "rafeek-bot"
+index_name = "rafeek-bot-v2"
 
 # Load and process documents
 print("📄 Loading PDF files...")
