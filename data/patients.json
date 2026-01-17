@@ -1,0 +1,150 @@
+[
+  {
+    "patient_id": "P001",
+    "name": "مريضة ١",
+    "age": 52,
+    "diagnosis_date": "2023-05-12",
+    "tumor_type": "Invasive ductal carcinoma",
+    "stage": "IIA",
+    "grade": 2,
+    "biomarkers": { "ER": "Positive", "PR": "Negative", "HER2": "Negative" },
+    "treatments": [
+      { "type": "Surgery", "date": "2023-06-01", "details": "Lumpectomy" },
+      { "type": "Chemotherapy", "date": "2023-07-01", "details": "AC-T regimen" }
+    ],
+    "comorbidities": ["Hypertension"],
+    "follow_up": "Every 3 months",
+    "allergies": [],
+    "genetic_tests": { "BRCA": "Negative" },
+    "social_support": "Family at home",
+    "notes": "Prefers Arabic; teleconsultation ok",
+    "last_updated": "2024-12-01T10:30:00Z"
+  },
+  {
+    "patient_id": "P002",
+    "name": "مريضة ٢",
+    "age": 45,
+    "diagnosis_date": "2024-01-20",
+    "tumor_type": "Invasive lobular carcinoma",
+    "stage": "I",
+    "grade": 1,
+    "biomarkers": { "ER": "Positive", "PR": "Positive", "HER2": "Negative" },
+    "treatments": [
+      { "type": "Surgery", "date": "2024-02-15", "details": "Mastectomy" }
+    ],
+    "comorbidities": [],
+    "follow_up": "Every 6 months",
+    "allergies": ["None"],
+    "genetic_tests": { "BRCA": "Negative" },
+    "social_support": "Friends nearby",
+    "notes": "No known allergies",
+    "last_updated": "2024-12-15T08:15:00Z"
+  },
+  {
+    "patient_id": "P003",
+    "name": "مريضة ٣",
+    "age": 29,
+    "diagnosis_date": "2024-08-10",
+    "tumor_type": "Triple-negative breast cancer",
+    "stage": "III",
+    "grade": 3,
+    "biomarkers": { "ER": "Negative", "PR": "Negative", "HER2": "Negative" },
+    "treatments": [
+      { "type": "Chemotherapy", "date": "2024-08-20", "details": "Neoadjuvant: dose-dense AC followed by paclitaxel" },
+      { "type": "Surgery", "date": "2024-11-15", "details": "Modified radical mastectomy" },
+      { "type": "Radiation", "date": "2025-01-05", "details": "Chest wall radiation" }
+    ],
+    "comorbidities": [],
+    "follow_up": "Every 3 months",
+    "allergies": [],
+    "genetic_tests": { "BRCA": "Positive (BRCA1)" },
+    "social_support": "Family supportive; concerned about fertility",
+    "notes": "Young patient, fertility preservation discussed; prefers Arabic",
+    "last_updated": "2025-01-02T12:00:00Z"
+  },
+  {
+    "patient_id": "P004",
+    "name": "مريضة ٤",
+    "age": 67,
+    "diagnosis_date": "2022-09-30",
+    "tumor_type": "HER2-positive invasive carcinoma (metastatic)",
+    "stage": "IV",
+    "grade": 2,
+    "biomarkers": { "ER": "Negative", "PR": "Negative", "HER2": "Positive" },
+    "treatments": [
+      { "type": "Systemic therapy", "date": "2022-10-10", "details": "Trastuzumab + Pertuzumab + Taxane" },
+      { "type": "Targeted therapy", "date": "2024-03-01", "details": "T-DM1" }
+    ],
+    "comorbidities": ["Type 2 Diabetes"],
+    "metastasis_sites": ["Liver", "Bones"],
+    "follow_up": "Monthly oncology clinic; symptom-driven palliative care",
+    "allergies": [],
+    "genetic_tests": { "BRCA": "Not tested" },
+    "social_support": "Lives with spouse; limited mobility",
+    "notes": "Receiving palliative-focused systemic therapy; monitoring LFTs",
+    "last_updated": "2024-11-20T09:45:00Z"
+  },
+  {
+    "patient_id": "P005",
+    "name": "مريض ١ (ذكر)",
+    "age": 40,
+    "diagnosis_date": "2025-01-03",
+    "tumor_type": "Male breast cancer - Invasive ductal carcinoma",
+    "stage": "I",
+    "grade": 2,
+    "biomarkers": { "ER": "Positive", "PR": "Negative", "HER2": "Negative" },
+    "treatments": [
+      { "type": "Surgery", "date": "2025-01-20", "details": "Simple mastectomy" },
+      { "type": "Endocrine therapy", "date": "2025-02-01", "details": "Tamoxifen" }
+    ],
+    "comorbidities": [],
+    "follow_up": "Every 6 months",
+    "allergies": [],
+    "genetic_tests": { "BRCA": "Variant of uncertain significance (BRCA2)" },
+    "social_support": "Partner supportive",
+    "notes": "Male patient; counseling offered regarding fertility and genetics",
+    "last_updated": "2025-01-25T14:20:00Z"
+  },
+  {
+    "patient_id": "P006",
+    "name": "مريضة ٥",
+    "age": 55,
+    "diagnosis_date": "2023-03-05",
+    "tumor_type": "Ductal carcinoma in situ (DCIS)",
+    "stage": "0",
+    "grade": 1,
+    "biomarkers": { "ER": "Positive", "PR": "Positive", "HER2": "Negative" },
+    "treatments": [
+      { "type": "Surgery", "date": "2023-04-01", "details": "Lumpectomy with close margins" },
+      { "type": "Radiation", "date": "2023-05-20", "details": "Whole-breast radiation" }
+    ],
+    "comorbidities": ["Hyperlipidemia"],
+    "follow_up": "Every 6 months",
+    "allergies": [],
+    "genetic_tests": { "BRCA": "Negative" },
+    "social_support": "Independent; cooks for herself",
+    "notes": "Non-invasive disease; surveillance imaging scheduled annually",
+    "last_updated": "2024-10-10T11:00:00Z"
+  },
+  {
+    "patient_id": "P007",
+    "name": "مريضة ٦ (تكرار)",
+    "age": 76,
+    "diagnosis_date": "2014-06-18",
+    "tumor_type": "Invasive ductal carcinoma (local recurrence)",
+    "stage": "IIIA",
+    "grade": 2,
+    "biomarkers": { "ER": "Positive", "PR": "Positive", "HER2": "Negative" },
+    "treatments": [
+      { "type": "Prior treatment", "date": "2014-07-10", "details": "Lumpectomy + Radiation" },
+      { "type": "Current treatment", "date": "2024-09-01", "details": "Endocrine therapy; consider surgery if operable" }
+    ],
+    "comorbidities": ["COPD", "Osteoarthritis"],
+    "follow_up": "Every 3 months; geriatrics assessment",
+    "allergies": [],
+    "genetic_tests": { "BRCA": "Not done" },
+    "social_support": "Daughter nearby; prefers in-person visits",
+    "notes": "History of breast cancer 10 years prior; now local recurrence; goals of care discussed",
+    "last_updated": "2024-12-05T16:30:00Z"
+  }
+]

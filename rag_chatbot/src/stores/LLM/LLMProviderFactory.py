@@ -1,5 +1,6 @@
 from .LLMEnums import LLMEnums
-from .Providers import OpenAIProvider, CoHereProvider
+from .Providers import OpenAIProvider, CoHereProvider, GeminiProvider
+from .Providers import LocalProvider
 
 class LLMProviderFactory:
     def __init__(self, config: dict):
@@ -22,5 +23,17 @@ class LLMProviderFactory:
                 default_generation_max_output_tokens=self.config.GENERATION_DAFAULT_MAX_TOKENS,
                 default_generation_temperature=self.config.GENERATION_DAFAULT_TEMPERATURE
             )
+
+        if provider == LLMEnums.GEMINI.value:
+            return GeminiProvider(
+                api_key = self.config.GEMINI_API_KEY,
+                default_input_max_characters=self.config.INPUT_DAFAULT_MAX_CHARACTERS,
+                default_generation_max_output_tokens=self.config.GENERATION_DAFAULT_MAX_TOKENS,
+                default_generation_temperature=self.config.GENERATION_DAFAULT_TEMPERATURE
+            )
+
+        if provider == LLMEnums.LOCAL.value:
+            # Local provider doesn't need API keys; useful for testing/indexing without external calls
+            return LocalProvider()
 
         return None

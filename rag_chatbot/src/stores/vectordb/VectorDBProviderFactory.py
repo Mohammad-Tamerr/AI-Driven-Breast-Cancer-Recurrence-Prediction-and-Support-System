@@ -1,4 +1,4 @@
-from .providers import QdrantDBProvider
+from .providers import QdrantDBProvider, InMemoryDBProvider
 from .VectorDBEnums import VectorDBEnums
 from controllers.BaseController import BaseController
 
@@ -15,5 +15,9 @@ class VectorDBProviderFactory:
                 db_path=db_path,
                 distance_method=self.config.VECTOR_DB_DISTANCE_METHOD,
             )
+
+        if provider == VectorDBEnums.INMEMORY.value:
+            # In-memory provider useful for local testing (no external deps)
+            return InMemoryDBProvider()
         
         return None
