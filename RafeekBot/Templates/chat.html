@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفيق - مساعدك الطبي</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Add marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <h1>💖 رفيق - مساعدك الطبي الموثوق</h1>
+            <p>معاك في كل خطوة من رحلة العلاج</p>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="messages-container" id="messagesContainer">
+            <div class="welcome-message">
+                <div class="emoji">🌸</div>
+                <h2>مرحباً بك!</h2>
+                <p>
+                    أنا رفيق، مساعدك الطبي الذكي المتخصص في سرطان الثدي.<br>
+                    هنا لأقدم لك المعلومات الطبية الموثوقة والدعم النفسي.<br>
+                    اسألي أي سؤال وأنا هنا للمساعدة! 💪
+                </p>
+            </div>
+            
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-container">
+            <input 
+                type="text" 
+                id="userInput" 
+                placeholder="اكتبي سؤالك هنا... 💬"
+                autocomplete="off"
+            >
+            <button id="sendBtn">إرسال</button>
+        </div>
+    </div>
+
+    <script>
+        const messagesContainer = document.getElementById('messagesContainer');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        // Configure marked.js options
+        marked.setOptions({
+            breaks: true,
+            gfm: true
+        });
+
+        // Auto-scroll to bottom
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Format text with markdown-like syntax
+        function formatMessage(text) {
+            // Convert markdown to HTML
+            let formatted = marked.parse(text);
+            
+            // Custom formatting
+            formatted = formatted
+                // Bold text
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                // Italic text
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                // Add emoji spacing
+                .replace(/([\u{1F300}-\u{1F9FF}])/gu, '<span class="emoji-inline">$1</span>')
+                // Highlight medical terms
+                .replace(/\(([A-Z][a-z]+ [a-z]+)\)/g, '<span class="medical-term">($1)</span>');
+            
+            return formatted;
+        }
+
+        // Auto-scroll to bottom
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Add message to chat
+        function addMessage(text, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'avatar';
+            avatarDiv.textContent = isUser ? '👤' : '🤖';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            // Format message if it's from bot
+            if (!isUser) {
+                contentDiv.innerHTML = formatMessage(text);
+            } else {
+                contentDiv.textContent = text;
+            }
+            
+            if (isUser) {
+                messageDiv.appendChild(avatarDiv);
+                messageDiv.appendChild(contentDiv);
+            } else {
+                messageDiv.appendChild(contentDiv);
+                messageDiv.appendChild(avatarDiv);
+            }
+            
+            // Remove welcome message on first user message
+            const welcomeMsg = document.querySelector('.welcome-message');
+            if (welcomeMsg && isUser) {
+                welcomeMsg.remove();
+            }
+            
+            // Insert before typing indicator
+            messagesContainer.insertBefore(messageDiv, typingIndicator);
+            scrollToBottom();
+        }
+
+        // Show/Hide typing indicator
+        function showTyping(show) {
+            typingIndicator.classList.toggle('show', show);
+            scrollToBottom();
+        }
+
+        // Send message
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, true);
+            userInput.value = '';
+            sendBtn.disabled = true;
+            
+            // Show typing indicator
+            showTyping(true);
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ question: message })
+                });
+
+                const data = await response.json();
+                
+                // Hide typing indicator
+                showTyping(false);
+                
+                // Add bot response
+                if (data.answer) {
+                    addMessage(data.answer, false);
+                } else if (data.error) {
+                    addMessage('⚠️ ' + data.error, false);
+                } else {
+                    addMessage('عذراً، حدث خطأ. حاولي مرة أخرى.', false);
+                }
+            } catch (error) {
+                showTyping(false);
+                addMessage('❌ عذراً، حدث خطأ في الاتصال. تأكدي من الاتصال بالإنترنت.', false);
+                console.error('Error:', error);
+            }
+
+            sendBtn.disabled = false;
+            userInput.focus();
+        }
+
+        // Event listeners
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Focus input on load
+        userInput.focus();
+    </script>
+</body>
+</html>

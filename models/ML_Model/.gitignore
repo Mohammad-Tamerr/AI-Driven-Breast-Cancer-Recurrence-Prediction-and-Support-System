@@ -1,0 +1,61 @@
+# ========================
+# 1. System & Mac Junk (Important for Speed)
+# ========================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ========================
+# 2. Python & Virtual Environments (The Sync Killers)
+# ========================
+# Never upload these, they have thousands of small files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ========================
+# 3. Jupyter Notebooks Checkpoints
+# ========================
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# ========================
+# 4. Large Datasets (Ignore the folder name you are using)
+# ========================
+# Assuming your data is in 'brca_metabric' based on previous chats
+brca_metabric/
+data/
+datasets/
+raw_data/
+*.csv
+*.txt
+*.tsv
+*.xlsx
+*.xls
+*.zip
+*.tar.gz
+
+# ========================
+# 5. Model Artifacts (Too heavy for GitHub)
+# ========================
+*.pkl
+*.pickle
+*.h5
+*.pt
+*.pth
+*.joblib
+models/
+
+# ========================
+# 6. IDE Settings
+# ========================
+.vscode/
+.idea/

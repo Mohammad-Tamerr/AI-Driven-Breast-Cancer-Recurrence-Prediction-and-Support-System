@@ -1,0 +1,28 @@
+# System Files
+.DS_Store
+.vscode/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Virtual Env
+env/
+venv/
+
+# LARGE DATA FILES (The most important part)
+*.csv
+*.txt
+*.zip
+*.tar.gz
+*.h5
+*.pkl
+*.parquet
+*.xlsx
+*.xls
+
+# Specific Data Folders
+data/
+models/ML_Model/data_mrna_illumina_microarray.txt
+models/ML_Model/data_clinical_patient.txt
+models/ML_Model/data_clinical_sample.txt
