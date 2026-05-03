@@ -109,6 +109,56 @@ def chat():
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({"error": "عذراً، حدث خطأ في معالجة السؤال"}), 500
+    
+@app.route("/chat/integration", methods=["POST"])
+def chat_integration():
+    try:
+        data = request.json
+        user_question = data.get("question", "")
+        patient_context_data = data.get("patient_context", {})
+ 
+        if not user_question:
+            return jsonify({"error": "No question provided"}), 400
+ 
+        if patient_context_data:
+            treatments = []
+            if patient_context_data.get("chemotherapy"):
+                treatments.append("Chemotherapy")
+            if patient_context_data.get("hormone_therapy"):
+                treatments.append("Hormone Therapy")
+            if patient_context_data.get("radio_therapy"):
+                treatments.append("Radio Therapy")
+ 
+            patient_context = f"""
+معلومات المريض:
+- العمر عند التشخيص: {patient_context_data.get('age_at_diagnosis')} سنة
+- نوع السرطان: {patient_context_data.get('cancer_type')}
+- النوع التفصيلي: {patient_context_data.get('cancer_type_detailed')}
+- مرحلة الورم: {patient_context_data.get('tumor_stage')}
+- الدرجة النسيجية: {patient_context_data.get('neoplasm_histologic_grade')}
+- حالة ER: {patient_context_data.get('er_status')}
+- حالة PR: {patient_context_data.get('pr_status')}
+- حالة HER2: {patient_context_data.get('her2_status')}
+- العلاجات: {', '.join(treatments) if treatments else 'لا يوجد'}
+"""
+        else:
+            patient_context = ""
+        
+        print(f"❓ Question: {user_question}")
+        
+        full_input = f"{patient_context}\n\nالسؤال: {user_question}" if patient_context else user_question
+        
+        response = rag_chain.invoke({"input": full_input})
+        
+        print(f"🤖 Answer: {response['answer'][:150]}...")
+        
+        return jsonify({
+            "answer": response["answer"]
+        })
+    
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return jsonify({"error": "عذراً، حدث خطأ في معالجة السؤال"}), 500
 
 @app.route("/test")
 def test_page():
