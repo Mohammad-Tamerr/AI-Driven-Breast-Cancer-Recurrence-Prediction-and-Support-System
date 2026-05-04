@@ -9,4 +9,4 @@ langchain-community==0.3.26
 langchain-google-genai
 langchain-huggingface
 cryptography
-google.generativeai
+google-genai
